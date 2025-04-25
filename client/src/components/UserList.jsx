@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 import UserService from "../services/UserService";
 
@@ -7,8 +7,9 @@ import Search from "./Search";
 import UserListItem from "./UserListItem";
 
 export default function UserList() {
+	const [users, setUsers] = useState([]);
 	useEffect(() => {
-		UserService.getAll().then((result) => console.log(result));
+		UserService.getAll().then((result) => setUsers(result));
 	}, []);
 	return (
 		<>
@@ -160,7 +161,9 @@ export default function UserList() {
 						</thead>
 						<tbody>
 							{/* <!-- Table row component --> */}
-							<UserListItem />
+							{users.map((user) => (
+								<UserListItem key={user._id} user={user} />
+							))}
 						</tbody>
 					</table>
 				</div>
