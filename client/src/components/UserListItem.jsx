@@ -1,19 +1,26 @@
-export default function UserListItem({ user }) {
+export default function UserListItem({
+	firstName,
+	lastName,
+	email,
+	phoneNumber,
+	imageUrl,
+	createdAt
+}) {
 	return (
 		<>
 			<tr>
 				<td>
 					<img
-						src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png"
-						alt="{user.firstName}'s profile"
+						src={imageUrl}
+						alt={`${firstName}'s profile`}
 						className="image"
 					/>
 				</td>
-				<td>{user.firstName}</td>
-				<td>{user.lastName}</td>
-				<td>{user.email}</td>
-				<td>{user.phoneNumber}</td>
-				<td></td>
+				<td>{firstName}</td>
+				<td>{lastName}</td>
+				<td>{email}</td>
+				<td>{phoneNumber}</td>
+				<td>{createdAt}</td>
 
 				<td className="actions">
 					<button className="btn edit-btn" title="Edit">
