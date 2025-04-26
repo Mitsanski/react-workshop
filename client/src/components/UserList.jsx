@@ -5,11 +5,14 @@ import UserService from "../services/UserService";
 import Pagination from "./Pagination";
 import Search from "./Search";
 import UserCreateEdit from "./UserCreateEdit";
+import UserInfo from "./UserInfo";
 import UserListItem from "./UserListItem";
 
 export default function UserList() {
 	const [users, setUsers] = useState([]);
 	const [showCreate, setShowCreate] = useState(false);
+	const [showInfo, setShowInfo] = useState(false);
+	const [userIdInfo, setUserIdInfo] = useState();
 	useEffect(() => {
 		UserService.getAll().then((result) => setUsers(result));
 	}, []);
@@ -20,6 +23,10 @@ export default function UserList() {
 
 	const closeCreateUserClickHandler = () => {
 		setShowCreate((old) => !old);
+	};
+	const closeUserInfoClickHandler = () => {
+		console.log('works')
+		setShowInfo((old) => !old);
 	};
 
 	const saveCreateUserClickHandler = async (e) => {
@@ -39,6 +46,11 @@ export default function UserList() {
 		// Close modal
 		closeCreateUserClickHandler();
 	};
+
+	const userInfoClickHandler = (userId) => {
+		setUserIdInfo(userId)
+	};
+
 	return (
 		<>
 			<section className="card users-container">
@@ -50,6 +62,11 @@ export default function UserList() {
 						onSave={saveCreateUserClickHandler}
 					/>
 				)}
+
+				{userIdInfo && (
+					<UserInfo userId={userIdInfo} onClose={closeUserInfoClickHandler} />
+				)}
+
 				{/* <!-- Table component --> */}
 				<div className="table-wrapper">
 					<div>
@@ -195,7 +212,11 @@ export default function UserList() {
 						<tbody>
 							{/* <!-- Table row component --> */}
 							{users.map((user) => (
-								<UserListItem key={user._id} {...user} />
+								<UserListItem
+									key={user._id}
+									{...user}
+									onInfoClick={userInfoClickHandler}
+								/>
 							))}
 						</tbody>
 					</table>
