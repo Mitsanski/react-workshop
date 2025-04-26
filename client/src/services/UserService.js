@@ -9,12 +9,17 @@ export default {
 		return users;
 	},
 	async create(userData) {
+		const { country, city, street, streetNumber, ...postData } = userData;
+		console.log(postData)
+		postData.address = { country, city, street, streetNumber };
+		postData.createdAt = Date.now();
+		postData.updatedAt = Date.now();
 		const response = await fetch(baseURL, {
 			method: "POST",
 			headers: {
 				"Content-Type": "application/json"
 			},
-			body: JSON.stringify(userData)
+			body: JSON.stringify(postData)
 		});
 
 		const result = await response.json();

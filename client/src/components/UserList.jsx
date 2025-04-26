@@ -29,7 +29,6 @@ export default function UserList() {
 		// Get Form Data
 		const formData = new FormData(e.target);
 		const userData = Object.fromEntries(formData);
-		userData.createdAt = Date.now();
 
 		// create new user on server
 		const newUser = await UserService.create(userData);
