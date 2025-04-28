@@ -8,9 +8,14 @@ export default {
 
 		return users;
 	},
+	async getOne(userId) {
+		const response = await fetch(`${baseURL}/${userId}`);
+		const user = await response.json();
+		return user;
+	},
 	async create(userData) {
 		const { country, city, street, streetNumber, ...postData } = userData;
-		console.log(postData)
+		console.log(postData);
 		postData.address = { country, city, street, streetNumber };
 		postData.createdAt = Date.now();
 		postData.updatedAt = Date.now();

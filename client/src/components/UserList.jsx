@@ -24,10 +24,6 @@ export default function UserList() {
 	const closeCreateUserClickHandler = () => {
 		setShowCreate((old) => !old);
 	};
-	const closeUserInfoClickHandler = () => {
-		console.log('works')
-		setShowInfo((old) => !old);
-	};
 
 	const saveCreateUserClickHandler = async (e) => {
 		// stop default refresh behaviour
@@ -46,9 +42,8 @@ export default function UserList() {
 		// Close modal
 		closeCreateUserClickHandler();
 	};
-
 	const userInfoClickHandler = (userId) => {
-		setUserIdInfo(userId)
+		setUserIdInfo(userId);
 	};
 
 	return (
@@ -64,7 +59,7 @@ export default function UserList() {
 				)}
 
 				{userIdInfo && (
-					<UserInfo userId={userIdInfo} onClose={closeUserInfoClickHandler} />
+					<UserInfo userId={userIdInfo} />
 				)}
 
 				{/* <!-- Table component --> */}
