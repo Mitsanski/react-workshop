@@ -15,7 +15,6 @@ export default {
 	},
 	async create(userData) {
 		const { country, city, street, streetNumber, ...postData } = userData;
-		console.log(postData);
 		postData.address = { country, city, street, streetNumber };
 		postData.createdAt = Date.now();
 		postData.updatedAt = Date.now();

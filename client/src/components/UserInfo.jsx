@@ -1,12 +1,11 @@
 import { useEffect, useState } from "react";
 import UserService from "../services/UserService.js";
-import { format } from "date-fns";
+import { fromIsoDate } from "../utils/datetimeUtil.js";
 
 export default function UserInfo({ userId }) {
 	const [user, setUser] = useState({});
 	useEffect(() => {
 		UserService.getOne(userId).then((result) => {
-			console.log("Response:", result);
 			setUser(result);
 		});
 	}, [userId]);
@@ -36,7 +35,11 @@ export default function UserInfo({ userId }) {
 						</header>
 						<div className="content">
 							<div className="image-container">
-								<img src={user.imageUrl} alt="" className="image" />
+								<img
+									src={user.imageUrl}
+									alt={`${user.firstName}'s profile`}
+									className="image"
+								/>
 							</div>
 							<div className="user-details">
 								<p>
@@ -45,6 +48,7 @@ export default function UserInfo({ userId }) {
 								<p>
 									Full Name:
 									<strong>
+										{" "}
 										{user.firstName} {user.lastName}{" "}
 									</strong>
 								</p>
@@ -57,22 +61,20 @@ export default function UserInfo({ userId }) {
 								<p>
 									Address:
 									<strong>
-										{user.address?.country}, {user.address?.city},
-										{user.address?.street} {user.address?.streetNumber}
+										{" "}
+										{user.address?.country}, {user.address?.city},{" "}
+										{user.address?.street}{" "}
+										{user.address?.streetNumber}
 									</strong>
 								</p>
 
 								<p>
 									Created on:
-									<strong>
-										{format(
-											new Date(user.createdAt),
-											"EEEE, MMMM d, yyyy"
-										)}
-									</strong>
+									<strong> {fromIsoDate(user.createdAt)}</strong>
 								</p>
 								<p>
-									Modified on: <strong>Thursday, June 29, 2022</strong>
+									Modified on:{" "}
+									<strong>{fromIsoDate(user.updatedAt)}</strong>
 								</p>
 							</div>
 						</div>
